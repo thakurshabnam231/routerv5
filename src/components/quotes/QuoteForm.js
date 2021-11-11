@@ -3,8 +3,9 @@ import { useRef } from 'react';
 import Card from '../UI/Card';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import classes from './QuoteForm.module.css';
-
+import {useSelector} from 'react-redux'
 const QuoteForm = (props) => {
+   const data=useSelector(state=>state.author)
   const authorInputRef = useRef();
   const textInputRef = useRef();
 
