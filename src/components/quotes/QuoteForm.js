@@ -4,17 +4,24 @@ import Card from '../UI/Card';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import classes from './QuoteForm.module.css';
 import {useSelector} from 'react-redux'
+import {useDispatch} from "react-redux"
+import {formActions} from "../../components/store"
+
 const QuoteForm = (props) => {
-   const data=useSelector(state=>state.author)
   const authorInputRef = useRef();
   const textInputRef = useRef();
+  const dispatch=useDispatch();
+
 
   function submitFormHandler(event) {
     event.preventDefault();
-
     const enteredAuthor = authorInputRef.current.value;
     const enteredText = textInputRef.current.value;
-
+    const newObject={ 
+      author:enteredAuthor,
+      text:enteredText
+    }
+    dispatch(formActions.addItemHendler(newObject))
     // optional: Could validate here
 
     props.onAddQuote({ author: enteredAuthor, text: enteredText });
