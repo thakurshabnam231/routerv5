@@ -1,12 +1,16 @@
-
+import React,{Suspense} from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import AllQuotes from './pages/AllQuotes'
-import QuoteDetails from './pages/QuoteDetails';
-import NewQuote from './pages/NewQuote'
+
 import Layout from './components/layout/Layout';
 import NoFound from './pages/NoFound';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux'
+import LoadingSpinner from './components/UI/LoadingSpinner';
+
+const NewQuote=React.lazy(()=>import('./pages/NewQuote'))
+const QuoteDetails=React.lazy(()=>import('./pages/QuoteDetails'))
+
 const App = () => {
   const formData = useSelector(state => state.form)
   useEffect(() => {
@@ -26,6 +30,7 @@ const App = () => {
   },[formData])
   return (
     <Layout>
+    <Suspense fallback={<div className="centered"><LoadingSpinner/></div>}>
       <Switch>
         <Route exact path='/' >
           <Redirect to='/quotes' />
@@ -43,6 +48,7 @@ const App = () => {
         </Route>
 
       </Switch>
+      </Suspense>
     </Layout>
   );
 }
