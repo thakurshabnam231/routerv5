@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Route, useParams } from 'react-router-dom'
+import { Route, useParams ,useRouteMatch} from 'react-router-dom'
 import Comments from '../components/comments/Comments'
 import HighlightedQuote from '../components/quotes/HighlightedQuote'
 const dummy_data = [
@@ -9,6 +9,7 @@ const dummy_data = [
 
 const QuoteDetails = () => {
     const params = useParams();
+   const match= useRouteMatch();
     const quote = dummy_data.find(quote => quote.id === params.quotesId);
     if (!quote) {
         return<p>no quote found</p>;
@@ -19,7 +20,7 @@ const QuoteDetails = () => {
         
             <HighlightedQuote text={quote.text} author={quote.author} />
 
-            <Route path={`/quotes/${params.quotesId}/comments`}>
+            <Route path={`${match.path}/comments`}>
                 <Comments /></Route>
         </Fragment>
     )
